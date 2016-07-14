@@ -10,6 +10,9 @@ logging.getLogger("factory").setLevel(logging.WARN)
 
 SITE_ID = 1
 
+from selenium.webdriver.phantomjs import webdriver
+SELENIUM_WEBDRIVER = webdriver
+
 APP_ROOT = os.path.abspath(
     os.path.join(os.path.dirname(__file__), ".."))
 
