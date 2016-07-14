@@ -10,6 +10,11 @@ env:
     - DJANGO=1.8.12 DB=sqlite
     - DJANGO=1.9.5 DB=sqlite
 
+before_script:
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+  - sleep 3 # give xvfb some time to start
+
 # command to install dependencies
 install:
   - pip install .
