@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 import os
 
 # not so bad: http://joebergantine.com/blog/2015/jul/17/releasing-package-pypi/
-version = __import__('folderless').__version__
+version = __import__('formfieldstash').__version__
 
 
 def read(fname):
@@ -11,21 +11,19 @@ def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
 setup(
-    name="django-folderless",
+    name="django-formfieldstash",
     version=version,
-    url='http://github.com/benzkji/django-folderless',
+    url='http://github.com/benzkji/django-formfieldstash',
     license='BSD',
     platforms=['OS Independent'],
-    description="folderless media management for django",
+    description="formfieldstash",
     long_description=read('README.rst'),
     author=u'Ben Stähli',
     author_email='bnzk@bnzk.ch',
     packages=find_packages(),
     install_requires=(
         # 'Django>=1.3,<1.5',  # no need to limit while in development
-        'Django>=1.7',
-        'easy-thumbnails>=2.0',
-        'django-appconf>=0.6'
+        'Django>=1.8',
     ),
     include_package_data=True,
     zip_safe=False,
