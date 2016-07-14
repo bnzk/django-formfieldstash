@@ -44,12 +44,4 @@ Have a look at ``formfieldstash/tests/test_app/admin.py`` for some examples.
 Contribute
 ------------
 
-Fork and code. Either run `tox` for complete tests, or `python manage.py test --settings=folderless.tests.settings_test`
-
-
-Credits / Idea
---------------
-
-main repository: https://github.com/benzkji/django-folderless . many similiar things already exist. no wonder this project is heavily experienced by https://github.com/stefanfoulis/django-filer, and to some extent, feincms.module.medialibrary and https://github.com/samluescher/django-media-tree. initial idea credits: https://github.com/wullerot/ (manipulated django-filer to hide folders completely). more ideas: http://de.slideshare.net/motivesystems/slideshare-upload-gartner-pcc-presentation-going-folderless-with-metadata
-
-this project uses http://semver.org.
+Fork and code. Either run `tox` for complete tests, or `python manage.py test --settings=formfieldstash.tests.settings_test`

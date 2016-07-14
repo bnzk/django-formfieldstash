@@ -1,117 +1,76 @@
 # -*- coding: utf-8 -*-
-
-# from django.forms.models import modelform_factory
-import os
-import json
-
-from django.test import TestCase
-# from django.core.files import File as DjangoFile
 from django.core.urlresolvers import reverse
 
-from django.conf import settings
+from formfieldstash.tests.utils.django_utils import create_superuser
+from formfieldstash.tests.utils.selenium_utils import SeleniumTestCase, CustomWebDriver
+from formfieldstash.tests.test_app.models import TestModelSingle, TestModelAdvanced
 
-from folderless.models import File
-from folderless.tests.utils import create_superuser, create_image
 
-
-class FolderlessAdminUrlsTests(TestCase):
+class FormFieldStashAdminTests(SeleniumTestCase):
     def setUp(self):
+        self.single_empty = TestModelSingle()
+        self.single_empty.save()
+        self.single = TestModelSingle(**{'selection': 'octopus', })
+        self.single.save()
+        self.advanced_empty = TestModelAdvanced()
+        self.advanced_empty.save()
+        self.advanced = TestModelAdvanced(**{'set': 'set1', })
+        self.advanced.save()
         self.superuser = create_superuser()
-        self.client.login(username='admin', password='secret')
-        self.img = create_image()
-        self.image_name = 'test_file.jpg'
-        self.filename = os.path.join(settings.FILE_UPLOAD_TEMP_DIR,
-                                     self.image_name)
-        self.img.save(self.filename, 'JPEG')
+        # Instantiating the WebDriver will load your browser
+        self.wd = CustomWebDriver()
 
     def tearDown(self):
-        self.client.logout()
+        self.wd.quit()
 
     def test_app_index_get(self):
-        response = self.client.get(reverse('admin:app_list', args=('folderless',)))
-        self.assertEqual(response.status_code, 200)
+        self.login()
+        self.open(reverse('admin:index'))
+        self.wd.find_css(".app-test_app")
 
-    def test_file_change_list(self):
-        # upload file, so we get an item in the list
-        self.client.post(
-            reverse('admin:folderless-ajax_upload'),
-            {'ajax-file': open(self.filename), 'filename': self.image_name}
-        )
-        response = self.client.get(reverse('admin:folderless_file_changelist'))
-        self.assertEqual(response.status_code, 200)
+    def test_single_stash_empty(self):
+        self.login()
+        self.open(reverse('admin:test_app_testmodelsingle_change', args=[self.single_empty.id]))
+        horse = self.wd.find_css("div.field-horse")
+        self.assertFalse(horse.is_displayed())
+        bear = self.wd.find_css("div.field-bear")
+        self.assertFalse(bear.is_displayed())
+        octo = self.wd.find_css("div.field-octopus")
+        self.assertFalse(octo.is_displayed())
 
-    def test_file_change_view(self):
-        self.client.post(
-            reverse('admin:folderless-ajax_upload'),
-            {'ajax-file': open(self.filename), 'filename': self.image_name}
-        )
-        file_id = File.objects.all()[0].id
-        response = self.client.get(reverse('admin:folderless_file_change', args=(file_id, )))
-        self.assertEqual(response.status_code, 200)
+    def test_single_stash(self):
+        self.login()
+        self.open(reverse('admin:test_app_testmodelsingle_change', args=[self.single.id]))
+        horse = self.wd.find_css("div.field-horse")
+        self.assertFalse(horse.is_displayed())
+        bear = self.wd.find_css("div.field-bear")
+        self.assertFalse(bear.is_displayed())
+        octo = self.wd.find_css("div.field-octopus")
+        self.assertTrue(octo.is_displayed())
+        # change select value
+        self.wd.find_css("div.field-selection select > option[value=horse]").click()
+        horse = self.wd.find_css("div.field-horse")
+        self.assertTrue(horse.is_displayed())
+        octo = self.wd.find_css("div.field-octopus")
+        self.assertFalse(octo.is_displayed())
 
-    def test_empty_file_field(self):
-        response = self.client.get(reverse('admin:test_app_testmodel_add'))
-        self.assertEqual(response.status_code, 200)
+    def test_multi_stash_empty(self):
+        self.login()
+        self.open(reverse('admin:test_app_testmodeladvanced_change', args=[self.advanced_empty.id]))
+        inline = self.wd.find_css("#testinlinemodel_set-group")
+        self.assertFalse(inline.is_displayed())
+        f11 = self.wd.find_css("div.field-set1_1")
+        self.assertFalse(f11.is_displayed())
+        f31 = self.wd.find_css("div.field-set3_1")
+        self.assertFalse(f31.is_displayed())
 
-    def test_file_upload(self):
-        self.assertEqual(File.objects.count(), 0)
-        self.client.post(
-            reverse('admin:folderless-ajax_upload'),
-            {'ajax-file': open(self.filename), 'filename': self.image_name}
-        )
-        self.assertEqual(File.objects.count(), 1)
+    def test_multi_stash(self):
+        self.login()
+        self.open(reverse('admin:test_app_testmodeladvanced_change', args=[self.advanced.id]))
+        inline = self.wd.find_css("#testinlinemodel_set-group")
+        self.assertTrue(inline.is_displayed())
+        f11 = self.wd.find_css("div.field-set1_1")
+        self.assertTrue(f11.is_displayed())
+        f31 = self.wd.find_css("div.field-set3_1")
+        self.assertFalse(f31.is_displayed())
 
-    def test_bad_file_upload(self):
-        self.assertEqual(File.objects.count(), 0)
-        response = self.client.post(
-            reverse('admin:folderless-ajax_upload'), {}
-        )
-        data = json.loads(response.content)
-        self.assertEqual(data["success"], False)
-
-    def test_non_post_upload_request(self):
-        self.assertEqual(File.objects.count(), 0)
-        response = self.client.get(reverse('admin:folderless-ajax_upload'))
-        data = json.loads(response.content)
-        self.assertEqual(data["success"], False)
-
-    def test_prevent_duplicate_file_name_upload(self):
-        self.assertEqual(File.objects.count(), 0)
-        self.client.post(
-            reverse('admin:folderless-ajax_upload'),
-            {'ajax-file': open(self.filename), 'filename': self.image_name}
-        )
-        self.assertEqual(File.objects.count(), 1)
-        self.client.post(
-            reverse('admin:folderless-ajax_upload'),
-            {'ajax-file': open(self.filename), 'filename': self.image_name}
-        )
-        self.assertEqual(File.objects.count(), 1)
-
-    def test_prevent_duplicate_file_content_upload(self):
-        self.assertEqual(File.objects.count(), 0)
-        self.client.post(
-            reverse('admin:folderless-ajax_upload'),
-            {'ajax-file': open(self.filename), 'filename': "first-%s" % self.image_name}
-        )
-        self.assertEqual(File.objects.count(), 1)
-        self.client.post(
-            reverse('admin:folderless-ajax_upload'),
-            {'ajax-file': open(self.filename), 'filename': "second-%s" % self.image_name}
-        )
-        self.assertEqual(File.objects.count(), 1)
-
-    def test_prevent_duplicate_json_response(self):
-        self.assertEqual(File.objects.count(), 0)
-        self.client.post(
-            reverse('admin:folderless-ajax_upload'),
-            {'ajax-file': open(self.filename), 'filename': "first-%s" % self.image_name}
-        )
-        self.assertEqual(File.objects.count(), 1)
-        response = self.client.post(
-            reverse('admin:folderless-ajax_upload'),
-            {'ajax-file': open(self.filename), 'filename': "second-%s" % self.image_name}
-        )
-        data = json.loads(response.content)
-        self.assertEqual(data["success"], False)
-        self.assertGreaterEqual(data["errors"], 1)
