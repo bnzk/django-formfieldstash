@@ -10,6 +10,7 @@ logging.getLogger("factory").setLevel(logging.WARN)
 
 SITE_ID = 1
 
+# from selenium.webdriver.firefox import webdriver
 from selenium.webdriver.phantomjs import webdriver
 SELENIUM_WEBDRIVER = webdriver
 
