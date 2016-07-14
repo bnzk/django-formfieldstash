@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from formfieldstash.admin import FormFieldStashMixin
-from models import TestModelSingle, TestModelAdvanced, TestModelInInlineModel, TestInlineModelSingle, \
+from .models import TestModelSingle, TestModelAdvanced, TestModelInInlineModel, TestInlineModelSingle, \
     TestInlineModel
 
 
