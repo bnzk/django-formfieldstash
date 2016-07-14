@@ -4,7 +4,7 @@ django-formfieldstash
 .. image:: https://travis-ci.org/benzkji/django-formfieldstash.svg
     :target: https://travis-ci.org/benzkji/django-formfieldstash
 
-show/hide modelform fields, based on current value of a dropdown in the same field.
+show/hide modelform fields, depending on current value of a dropdown in the form. without page reload.
 
 
 Installation
