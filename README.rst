@@ -35,6 +35,7 @@ Have a look at ``formfieldstash/tests/test_app/admin.py`` for some examples.
 
 .. code-block:: python
 
+    NOPE
     from formfieldstash.admin import assaavdsvad
 
     class TestModel(models.Model):
