@@ -11,11 +11,11 @@ class FormFieldStashMixin(object):
                     field.widget.attrs['data-formfield-stash'] = "true"
                     field.widget.attrs['data-original-field'] = db_field.name
         if getattr(self, 'formfield_stash', None):
-            for stash_field, fields in self.formfield_stash.iteritems():
+            for stash_field, fields in self.formfield_stash.items():
                 if db_field.name == stash_field:
                     field.widget.attrs['data-formfield-stash'] = "true"
                     field.widget.attrs['data-original-field'] = db_field.name
-                    for choice, show_fields in fields.iteritems():
+                    for choice, show_fields in fields.items():
                         field.widget.attrs['data-formfield-stash-%s' % choice] = (
                             ','.join(show_fields)
                         )
