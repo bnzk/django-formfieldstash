@@ -64,7 +64,9 @@
             };
 
             _self.change(on_change);
-            on_change();
+            // allow other widgets to initialize in a visible state
+            // ie filer widget
+            setTimeout(on_change, 20);
 
             return this;
         });
