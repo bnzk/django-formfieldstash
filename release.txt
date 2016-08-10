@@ -1,7 +1,8 @@
 
 
-git flow release start 0.0.2
+git flow release start 0.0.3
 version bump in formfieldstash/__init__.py
+CHANGELOG?!
 git flow release finish 0.xxx
 git push --all; git push --tags
 python setup.py sdist
