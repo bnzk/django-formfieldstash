@@ -33,6 +33,7 @@
             var $form = _self.closest("form");
 
             var on_change = function(e) {
+                clearTimeout(timeout_id);
                 var current_value = _self.val();
                 $.each(fields, function(index, item) {
                     var selector = "#id_" + prefix + item;
@@ -66,7 +67,8 @@
             _self.change(on_change);
             // allow other widgets to initialize in a visible state
             // ie filer widget
-            setTimeout(on_change, 20);
+            var timeout_id = setTimeout(on_change, 20);
+            // on_change();
 
             return this;
         });

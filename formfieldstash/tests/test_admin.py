@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
 from django.core.urlresolvers import reverse
+from selenium.webdriver.support.expected_conditions import visibility_of
+from selenium.webdriver.support.wait import WebDriverWait
 
 from formfieldstash.tests.utils.django_utils import create_superuser
-from formfieldstash.tests.utils.selenium_utils import SeleniumTestCase, CustomWebDriver
+from formfieldstash.tests.utils.selenium_utils import SeleniumTestCase, CustomWebDriver, \
+    invisibility_of
 from formfieldstash.tests.test_app.models import TestModelSingle, TestModelAdvanced
 
 
@@ -32,21 +35,30 @@ class FormFieldStashAdminTests(SeleniumTestCase):
         self.login()
         self.open(reverse('admin:test_app_testmodelsingle_change', args=[self.single_empty.id]))
         horse = self.wd.find_css("div.field-horse")
-        self.assertFalse(horse.is_displayed())
+        # why wait? widget init delays initialization for 20ms, for other widgets to initialize.
+        wait = WebDriverWait(self.wd, 1)
+        wait.until(invisibility_of(horse))
+        # self.assertFalse(horse.is_displayed())
         bear = self.wd.find_css("div.field-bear")
-        self.assertFalse(bear.is_displayed())
+        wait.until(invisibility_of(bear))
+        # self.assertFalse(bear.is_displayed())
         octo = self.wd.find_css("div.field-octopus")
-        self.assertFalse(octo.is_displayed())
+        wait.until(invisibility_of(octo))
+        # self.assertFalse(octo.is_displayed())
 
     def test_single_stash(self):
         self.login()
         self.open(reverse('admin:test_app_testmodelsingle_change', args=[self.single.id]))
         horse = self.wd.find_css("div.field-horse")
-        self.assertFalse(horse.is_displayed())
+        wait = WebDriverWait(self.wd, 1)
+        wait.until(invisibility_of(horse))
+        # self.assertFalse(horse.is_displayed())
         bear = self.wd.find_css("div.field-bear")
-        self.assertFalse(bear.is_displayed())
+        wait.until(invisibility_of(bear))
+        # self.assertFalse(bear.is_displayed())
         octo = self.wd.find_css("div.field-octopus")
-        self.assertTrue(octo.is_displayed())
+        wait.until(visibility_of(octo))
+        # self.assertTrue(octo.is_displayed())
         # change select value
         self.wd.find_css("div.field-selection select > option[value=horse]").click()
         horse = self.wd.find_css("div.field-horse")
@@ -58,19 +70,27 @@ class FormFieldStashAdminTests(SeleniumTestCase):
         self.login()
         self.open(reverse('admin:test_app_testmodeladvanced_change', args=[self.advanced_empty.id]))
         inline = self.wd.find_css("#testinlinemodel_set-group")
-        self.assertFalse(inline.is_displayed())
+        wait = WebDriverWait(self.wd, 1)
+        wait.until(invisibility_of(inline))
+        # self.assertFalse(inline.is_displayed())
         f11 = self.wd.find_css("div.field-set1_1")
-        self.assertFalse(f11.is_displayed())
+        wait.until(invisibility_of(f11))
+        # self.assertFalse(f11.is_displayed())
         f31 = self.wd.find_css("div.field-set3_1")
-        self.assertFalse(f31.is_displayed())
+        wait.until(invisibility_of(f31))
+        # self.assertFalse(f31.is_displayed())
 
     def test_multi_stash(self):
         self.login()
         self.open(reverse('admin:test_app_testmodeladvanced_change', args=[self.advanced.id]))
         inline = self.wd.find_css("#testinlinemodel_set-group")
-        self.assertTrue(inline.is_displayed())
+        wait = WebDriverWait(self.wd, 1)
+        wait.until(visibility_of(inline))
+        # self.assertTrue(inline.is_displayed())
         f11 = self.wd.find_css("div.field-set1_1")
-        self.assertTrue(f11.is_displayed())
+        wait.until(visibility_of(f11))
+        # self.assertTrue(f11.is_displayed())
         f31 = self.wd.find_css("div.field-set3_1")
-        self.assertFalse(f31.is_displayed())
+        wait.until(invisibility_of(f31))
+        # self.assertFalse(f31.is_displayed())
 

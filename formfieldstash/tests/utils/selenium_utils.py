@@ -3,6 +3,7 @@ from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.core.urlresolvers import reverse
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support.expected_conditions import _element_if_visible
 
 
 #determine the WebDriver module. default to Firefox
@@ -10,6 +11,15 @@ try:
     webdriver_module = settings.SELENIUM_WEBDRIVER
 except AttributeError:
     from selenium.webdriver.firefox import webdriver as webdriver_module
+
+
+class invisibility_of(object):
+
+    def __init__(self, element):
+        self.element = element
+
+    def __call__(self, ignored):
+        return not _element_if_visible(self.element)
 
 
 class CustomWebDriver(webdriver_module.WebDriver):
