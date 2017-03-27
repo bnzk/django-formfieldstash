@@ -113,4 +113,4 @@ Have a look at ``formfieldstash/tests/test_app/admin.py`` for some examples.
 Contribute
 ------------
 
-Fork and code. Either run `tox` for complete tests, or `python manage.py test --settings=formfieldstash.tests.settings_test`
+Fork and code (`./manage.py runserver` brings up a test app). Either run `tox` for complete tests, or `python manage.py test
