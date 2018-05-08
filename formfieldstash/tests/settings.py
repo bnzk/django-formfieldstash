@@ -10,9 +10,7 @@ logging.getLogger("factory").setLevel(logging.WARN)
 
 SITE_ID = 1
 
-# from selenium.webdriver.firefox import webdriver
-from selenium.webdriver.phantomjs import webdriver
-SELENIUM_WEBDRIVER = webdriver
+HEADLESS_TESTING = True
 
 APP_ROOT = os.path.abspath(
     os.path.join(os.path.dirname(__file__), ".."))
@@ -93,6 +91,8 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.locale.LocaleMiddleware',
 )
+
+MIDDLEWARE = MIDDLEWARE_CLASSES
 
 INSTALLED_APPS = EXTERNAL_APPS + INTERNAL_APPS
 COVERAGE_MODULE_EXCLUDES += EXTERNAL_APPS

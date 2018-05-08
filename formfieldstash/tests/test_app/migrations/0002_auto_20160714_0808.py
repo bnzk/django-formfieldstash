@@ -63,11 +63,11 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='testinlinemodelsingle',
             name='parent',
-            field=models.ForeignKey(to='test_app.TestModelInInlineModel'),
+            field=models.ForeignKey(to='test_app.TestModelInInlineModel', on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='testinlinemodel',
             name='parent',
-            field=models.ForeignKey(to='test_app.TestModelAdvanced'),
+            field=models.ForeignKey(to='test_app.TestModelAdvanced', on_delete=models.CASCADE),
         ),
     ]

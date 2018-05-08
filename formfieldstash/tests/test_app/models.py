@@ -46,7 +46,7 @@ class TestModelAdvanced(models.Model):
 
 @python_2_unicode_compatible
 class TestInlineModel(models.Model):
-    parent = models.ForeignKey(TestModelAdvanced)
+    parent = models.ForeignKey(TestModelAdvanced, on_delete=models.CASCADE)
     title = models.CharField(max_length=20, blank=True, )
 
     def __str__(self):
@@ -63,7 +63,7 @@ class TestModelInInlineModel(models.Model):
 
 @python_2_unicode_compatible
 class TestInlineModelSingle(models.Model):
-    parent = models.ForeignKey(TestModelInInlineModel)
+    parent = models.ForeignKey(TestModelInInlineModel, on_delete=models.CASCADE)
     selection = models.CharField('Selection', max_length=20, blank=True, choices=SELECTION_CHOICES)
     horse = models.CharField(max_length=20, blank=True, )
     bear = models.CharField(max_length=20, blank=True, )
