@@ -105,4 +105,3 @@ class FormFieldStashAdminTests(SeleniumTestCase):
         f31 = self.webdriver.find_css("div.field-set3_1")
         wait.until(invisibility_of(f31))
         # self.assertFalse(f31.is_displayed())
-

@@ -33,9 +33,9 @@ STATICFILES_DIRS = (
     os.path.join(APP_ROOT, 'static'),
 )
 
-#TEMPLATE_DIRS = (
-#    os.path.join(APP_ROOT, 'tests/test_app/templates'),
-#)
+# TEMPLATE_DIRS = (
+#     os.path.join(APP_ROOT, 'tests/test_app/templates'),
+# )
 
 TEMPLATES = [
     {

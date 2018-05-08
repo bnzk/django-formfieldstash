@@ -36,8 +36,7 @@ class CustomWebDriver(webdriver.Firefox):
 
     def wait_for_css(self, css_selector, timeout=7):
         """ Shortcut for WebDriverWait"""
-        return WebDriverWait(self, timeout).until(lambda driver : driver.find_css(css_selector))
-
+        return WebDriverWait(self, timeout).until(lambda driver: driver.find_css(css_selector))
 
 
 class SeleniumTestCase(StaticLiveServerTestCase):
