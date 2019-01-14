@@ -1,4 +1,9 @@
 
+==== 0.0.3 (2018-01-14) ===
+
+- support for django up to 2.1
+
+
 ==== 0.0.2 (2016-08-10) ===
 
 - delayed initialization of widget (let other js based widget initialize in a displayed state)
