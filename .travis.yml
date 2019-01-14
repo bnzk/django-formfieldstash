@@ -2,7 +2,6 @@ language: python
 
 python:
   - "2.7"
-  - "3.4"
   - "3.5"
   - "3.6"
 
@@ -13,11 +12,15 @@ env:
     - REQ='django>=1.10,<1.11'
     - REQ='django>=1.11,<2.0'
     - REQ='django>=2.0,<2.1'
+    - REQ='django>=2.1,<2.2'
+
 matrix:
   allow-failures:
   exclude:
     - python: '2.7'
       env: REQ='django>=2.0,<2.1'
+    - python: '2.7'
+      env: REQ='django>=2.1,<2.2'
 
 # https://docs.travis-ci.com/user/gui-and-headless-browsers/
 before_script:
