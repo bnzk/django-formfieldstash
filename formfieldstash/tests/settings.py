@@ -10,17 +10,22 @@ logging.getLogger("factory").setLevel(logging.WARN)
 
 SITE_ID = 1
 
-# from selenium.webdriver.firefox import webdriver
-from selenium.webdriver.phantomjs import webdriver
-SELENIUM_WEBDRIVER = webdriver
+HEADLESS_TESTING = True
 
 APP_ROOT = os.path.abspath(
     os.path.join(os.path.dirname(__file__), ".."))
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': ':memory:',
+#     }
+# }
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': ':memory:',
+        'NAME': 'db.sqlite',
     }
 }
 
@@ -35,9 +40,9 @@ STATICFILES_DIRS = (
     os.path.join(APP_ROOT, 'static'),
 )
 
-#TEMPLATE_DIRS = (
-#    os.path.join(APP_ROOT, 'tests/test_app/templates'),
-#)
+# TEMPLATE_DIRS = (
+#     os.path.join(APP_ROOT, 'tests/test_app/templates'),
+# )
 
 TEMPLATES = [
     {
@@ -93,6 +98,8 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.locale.LocaleMiddleware',
 )
+
+MIDDLEWARE = MIDDLEWARE_CLASSES
 
 INSTALLED_APPS = EXTERNAL_APPS + INTERNAL_APPS
 COVERAGE_MODULE_EXCLUDES += EXTERNAL_APPS

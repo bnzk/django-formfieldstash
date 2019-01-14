@@ -8,6 +8,7 @@ from .models import TestModelSingle, TestModelAdvanced, TestModelInInlineModel, 
 class TestModelAdmin(FormFieldStashMixin, admin.ModelAdmin):
     single_formfield_stash = ('selection', )
 
+
 admin.site.register(TestModelSingle, TestModelAdmin)
 
 
@@ -28,6 +29,7 @@ class TestModelAdvancedAdmin(FormFieldStashMixin, admin.ModelAdmin):
     inlines = [TestInlineModelInline, ]
     formfield_stash = ADVANCED_STASH
 
+
 admin.site.register(TestModelAdvanced, TestModelAdvancedAdmin)
 
 
@@ -38,5 +40,6 @@ class TestInlineModelSingleInline(FormFieldStashMixin, admin.StackedInline):
 
 class TestModelInInlineModelAdmin(FormFieldStashMixin, admin.ModelAdmin):
     inlines = [TestInlineModelSingleInline, ]
+
 
 admin.site.register(TestModelInInlineModel, TestModelInInlineModelAdmin)

@@ -36,6 +36,9 @@
                 clearTimeout(timeout_id);
                 var current_value = _self.val();
                 $.each(fields, function(index, item) {
+                    if (!item.length) {
+                        return;
+                    }
                     var selector = "#id_" + prefix + item;
                     var $field = $form.find(selector);
                     var $wrap = $field.closest(".form-row");
@@ -43,7 +46,7 @@
                         selector = item;
                         $wrap = $(selector);
                     }
-                    if (!$wrap.size()) {
+                    if (!$wrap.length) {
                         // multi widget fields workaround, for now!
                         $wrap = $form.find(selector + "_0").closest(".form-row");
                     }
@@ -80,7 +83,7 @@
 django.jQuery(document).ready( function($) {
 
     $('.inline-group').each(function(index, inline) {
-        if ($(inline).find("fieldset select[data-formfield-stash=true]").size()) {
+        if ($(inline).find("fieldset select[data-formfield-stash=true]").length) {
             $(inline).find(".add-row").click(add_row_handler);
         };
     });

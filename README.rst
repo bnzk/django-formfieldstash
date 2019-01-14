@@ -1,8 +1,13 @@
 django-formfieldstash
 *****************
 
-.. image:: https://travis-ci.org/benzkji/django-formfieldstash.svg
-    :target: https://travis-ci.org/benzkji/django-formfieldstash
+.. image:: https://travis-ci.org/bnzk/django-formfieldstash.svg
+    :target: https://travis-ci.org/bnzk/django-formfieldstash
+.. image:: https://img.shields.io/pypi/v/django-formfieldstash.svg
+    :target: https://pypi.python.org/pypi/django-formfieldstash/
+.. image:: https://img.shields.io/pypi/l/django-formfieldstash.svg
+    :target: https://pypi.python.org/pypi/django-formfieldstash/
+
 
 show/hide modelform fields, depending on current value of a dropdown in the form. without page reload.
 this is a pure javascript solution, using a modeladminmixin approach.
@@ -113,4 +118,4 @@ Have a look at ``formfieldstash/tests/test_app/admin.py`` for some examples.
 Contribute
 ------------
 
-Fork and code. Either run `tox` for complete tests, or `python manage.py test --settings=formfieldstash.tests.settings_test`
+Fork and code (`./manage.py runserver` brings up a test app). Either run `tox` for complete tests, or `python manage.py test
