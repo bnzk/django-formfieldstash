@@ -1,13 +1,12 @@
 
 
 git flow release start 0.0.3
-version bump in formfieldstash/__init__.py
-CHANGELOG?!
+# version bump in formfieldstash/__init__.py
+# CHANGELOG update check
 git flow release finish 0.xxx
 git push --all; git push --tags
+git push upstream --all; git push upstream --tags
 python setup.py sdist
-# no wheel for now?! python setup.py bdist_wheel --universal
-python setup.py register -r pypitest
+python setup.py bdist_wheel --universal
 twine upload dist/* -r pypitest
-python setup.py register -r pypi
 twine upload dist/*

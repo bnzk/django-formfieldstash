@@ -36,6 +36,9 @@
                 clearTimeout(timeout_id);
                 var current_value = _self.val();
                 $.each(fields, function(index, item) {
+                    if (!item.length) {
+                        return;
+                    }
                     var selector = "#id_" + prefix + item;
                     var $field = $form.find(selector);
                     var $wrap = $field.closest(".form-row");

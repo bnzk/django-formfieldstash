@@ -15,6 +15,13 @@ HEADLESS_TESTING = True
 APP_ROOT = os.path.abspath(
     os.path.join(os.path.dirname(__file__), ".."))
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': ':memory:',
+#     }
+# }
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
