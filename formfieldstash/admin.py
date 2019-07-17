@@ -32,6 +32,7 @@ class FormFieldStashMixin(object):
     @property
     def media(self):
         js = (
+            'admin/js/jquery.init.js',
             'formfield_stash/formfield_stash.js',
         )
         css = {
