@@ -45,8 +45,22 @@ class TestModelAdvanced(models.Model):
 
 
 @python_2_unicode_compatible
+class TestModelAdvanced2(models.Model):
+    set = models.CharField('Selection', max_length=20, blank=True, choices=SET_CHOICES)
+    set1_1 = models.CharField(max_length=20, blank=True, )
+    set2_1 = models.CharField(max_length=20, blank=True, )
+    set2_2 = models.CharField(max_length=20, blank=True, )
+    set2_3 = models.CharField(max_length=20, blank=True, )
+    set3_1 = models.CharField(max_length=20, blank=True, )
+
+    def __str__(self):
+        return "Test Model: %s" % self.set
+
+
+@python_2_unicode_compatible
 class TestInlineModel(models.Model):
     parent = models.ForeignKey(TestModelAdvanced, on_delete=models.CASCADE)
+    parent2 = models.ForeignKey(TestModelAdvanced2, on_delete=models.CASCADE, default=None, null=True)
     title = models.CharField(max_length=20, blank=True, )
 
     def __str__(self):
