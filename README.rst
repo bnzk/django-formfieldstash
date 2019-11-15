@@ -87,12 +87,13 @@ Have a look at ``formfieldstash/tests/test_app/admin.py`` for some examples.
             return "A Simple Inline Model: %s" % self.title
 
 
+
     # admin.py
 
+
+    @admin.register(TestModelSingle, TestModelAdmin)
     class TestModelAdmin(FormFieldStashMixin, admin.ModelAdmin):
         single_formfield_stash = ('selection', )
-
-    admin.site.register(TestModelSingle, TestModelAdmin)
 
 
     class TestInlineModelInline(admin.StackedInline):
@@ -108,11 +109,11 @@ Have a look at ``formfieldstash/tests/test_app/admin.py`` for some examples.
     }
 
 
+    @admin.register(TestModelAdvanced)
     class TestModelAdvancedAdmin(FormFieldStashMixin, admin.ModelAdmin):
         inlines = [TestInlineModelInline, ]
         formfield_stash = ADVANCED_STASH
 
-    admin.site.register(TestModelAdvanced, TestModelAdvancedAdmin)
 
 
     # same admin.py, but with modelforms
@@ -129,10 +130,9 @@ Have a look at ``formfieldstash/tests/test_app/admin.py`` for some examples.
             )
         )
 
+    @admin.register(TestModelSingle)
     class TestModelAdmin(FormFieldStashMixin, admin.ModelAdmin):
         form = TestModelForm
-
-    admin.site.register(TestModelSingle, TestModelAdmin)
 
 
     class TestInlineModelInline(admin.StackedInline):
@@ -157,11 +157,11 @@ Have a look at ``formfieldstash/tests/test_app/admin.py`` for some examples.
             )
         )
 
+
+    @admin.register(TestModelAdvanced, TestModelAdvancedAdmin)
     class TestModelAdvancedAdmin(FormFieldStashMixin, admin.ModelAdmin):
         inlines = [TestInlineModelInline, ]
         form = TestModelAdvancedForm
-
-    admin.site.register(TestModelAdvanced, TestModelAdvancedAdmin)
 
 
 Contribute
