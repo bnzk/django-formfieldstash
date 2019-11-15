@@ -1,6 +1,6 @@
 
 
-git flow release start 0.0.3
+git flow release start 0.0.x
 # version bump in formfieldstash/__init__.py
 # CHANGELOG update check
 git flow release finish 0.xxx
