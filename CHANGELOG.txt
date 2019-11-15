@@ -1,4 +1,9 @@
 
+==== 0.0.5 (2019-11-15) ===
+
+- when using a modelform, the needed attrs can now be "calculated" with helper functions
+
+
 ==== 0.0.4 (2018-07-17) ===
 
 - support for django up to 2.2

@@ -7,7 +7,8 @@ from selenium.webdriver.firefox.options import Options
 from formfieldstash.tests.utils.django_utils import create_superuser
 from formfieldstash.tests.utils.selenium_utils import SeleniumTestCase, CustomWebDriver, \
     invisibility_of
-from formfieldstash.tests.test_app.models import TestModelSingle, TestModelAdvanced
+from formfieldstash.tests.test_app.models import TestModelSingle, TestModelAdvanced, TestModelSingle2, \
+    TestModelAdvanced2
 
 # compat
 import django
@@ -24,10 +25,18 @@ class FormFieldStashAdminTests(SeleniumTestCase):
         self.single_empty.save()
         self.single = TestModelSingle(**{'selection': 'octopus', })
         self.single.save()
+        self.single2_empty = TestModelSingle2()
+        self.single2_empty.save()
+        self.single2 = TestModelSingle2(**{'selection': 'octopus', })
+        self.single2.save()
         self.advanced_empty = TestModelAdvanced()
         self.advanced_empty.save()
         self.advanced = TestModelAdvanced(**{'set': 'set1', })
         self.advanced.save()
+        self.advanced2_empty = TestModelAdvanced2()
+        self.advanced2_empty.save()
+        self.advanced2 = TestModelAdvanced2(**{'set': 'set1', })
+        self.advanced2.save()
         self.superuser = create_superuser()
         # Instantiating the WebDriver will load your browser
         options = Options()
@@ -44,8 +53,20 @@ class FormFieldStashAdminTests(SeleniumTestCase):
         self.webdriver.find_css(".app-test_app")
 
     def test_single_stash_empty(self):
+        self._single_stash_empty('testmodelsingle', self.single_empty.id)
+
+    def test_single_stash(self):
+        self._single_stash('testmodelsingle', self.single.id)
+
+    def test_single_stash_empty_with_form(self):
+        self._single_stash_empty('testmodelsingle2', self.single2_empty.id)
+
+    def test_single_stash_with_form(self):
+        self._single_stash('testmodelsingle2', self.single2.id)
+
+    def _single_stash_empty(self, model_name, instance_pk):
         self.login()
-        self.open(reverse('admin:test_app_testmodelsingle_change', args=[self.single_empty.id]))
+        self.open(reverse('admin:test_app_%s_change' % model_name, args=[instance_pk]))
         horse = self.webdriver.find_css("div.field-horse")
         # why wait? widget init delays initialization for 20ms, for other widgets to initialize.
         wait = WebDriverWait(self.webdriver, 1)
@@ -58,9 +79,9 @@ class FormFieldStashAdminTests(SeleniumTestCase):
         wait.until(invisibility_of(octo))
         # self.assertFalse(octo.is_displayed())
 
-    def test_single_stash(self):
+    def _single_stash(self, model_name, instance_pk):
         self.login()
-        self.open(reverse('admin:test_app_testmodelsingle_change', args=[self.single.id]))
+        self.open(reverse('admin:test_app_%s_change' % model_name, args=[instance_pk]))
         horse = self.webdriver.find_css("div.field-horse")
         wait = WebDriverWait(self.webdriver, 1)
         wait.until(invisibility_of(horse))
@@ -79,8 +100,20 @@ class FormFieldStashAdminTests(SeleniumTestCase):
         self.assertFalse(octo.is_displayed())
 
     def test_multi_stash_empty(self):
+        self._multi_stash_empty('testmodeladvanced', self.advanced_empty.id)
+
+    def test_multi_stash(self):
+        self._multi_stash('testmodeladvanced', self.advanced.id)
+
+    def test_multi_stash_empty_with_form(self):
+        self._multi_stash_empty('testmodeladvanced', self.advanced_empty.id)
+
+    def test_multi_stash_with_form(self):
+        self._multi_stash('testmodeladvanced', self.advanced.id)
+
+    def _multi_stash_empty(self, model_name, instance_pk):
         self.login()
-        self.open(reverse('admin:test_app_testmodeladvanced_change', args=[self.advanced_empty.id]))
+        self.open(reverse('admin:test_app_%s_change' % model_name, args=[instance_pk]))
         inline = self.webdriver.find_css("#testinlinemodel_set-group")
         wait = WebDriverWait(self.webdriver, 1)
         wait.until(invisibility_of(inline))
@@ -92,9 +125,9 @@ class FormFieldStashAdminTests(SeleniumTestCase):
         wait.until(invisibility_of(f31))
         # self.assertFalse(f31.is_displayed())
 
-    def test_multi_stash(self):
+    def _multi_stash(self, model_name, instance_pk):
         self.login()
-        self.open(reverse('admin:test_app_testmodeladvanced_change', args=[self.advanced.id]))
+        self.open(reverse('admin:test_app_%s_change' % model_name, args=[instance_pk]))
         inline = self.webdriver.find_css("#testinlinemodel_set-group")
         wait = WebDriverWait(self.webdriver, 1)
         wait.until(visibility_of(inline))

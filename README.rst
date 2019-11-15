@@ -40,7 +40,7 @@ Have a look at ``formfieldstash/tests/test_app/admin.py`` for some examples.
 
 .. code-block:: python
 
-    models.py
+    # models.py
 
     SELECTION_CHOICES = (
         ('', 'Empty'),
@@ -87,12 +87,13 @@ Have a look at ``formfieldstash/tests/test_app/admin.py`` for some examples.
             return "A Simple Inline Model: %s" % self.title
 
 
-    admin.py
 
+    # admin.py
+
+
+    @admin.register(TestModelSingle)
     class TestModelAdmin(FormFieldStashMixin, admin.ModelAdmin):
         single_formfield_stash = ('selection', )
-
-    admin.site.register(TestModelSingle, TestModelAdmin)
 
 
     class TestInlineModelInline(admin.StackedInline):
@@ -108,11 +109,60 @@ Have a look at ``formfieldstash/tests/test_app/admin.py`` for some examples.
     }
 
 
+    @admin.register(TestModelAdvanced)
     class TestModelAdvancedAdmin(FormFieldStashMixin, admin.ModelAdmin):
         inlines = [TestInlineModelInline, ]
         formfield_stash = ADVANCED_STASH
 
-    admin.site.register(TestModelAdvanced, TestModelAdvancedAdmin)
+
+
+    # same admin.py, but with modelforms
+
+    from formfieldstash.helpers import get_single_stash_attrs, get_advanced_stash_attrs
+
+
+    class TestModelForm(forms.ModelForm):
+        selection = forms.ChoiceField(
+            required=False,
+            choices=SELECTION_CHOICES,
+            widget=forms.Select(
+                attrs=get_single_stash_attrs('selection')
+            )
+        )
+
+
+    @admin.register(TestModelSingle)
+    class TestModelAdmin(FormFieldStashMixin, admin.ModelAdmin):
+        form = TestModelForm
+
+
+    class TestInlineModelInline(admin.StackedInline):
+        model = TestInlineModel
+
+
+    ADVANCED_STASH = {
+        'set': {
+            'set1': ('set1_1', '#testinlinemodel_set-group', ),
+            'set2': ('set2_1', 'set2_2', 'set2_3', ),
+            'set3': ('set3_1', 'set2_1', ),
+        },
+    }
+
+
+    class TestModelAdvancedForm(forms.ModelForm):
+        set = forms.ChoiceField(
+            required=False,
+            choices=SET_CHOICES,
+            widget=forms.Select(
+                attrs=get_advanced_stash_attrs('set', ADVANCED_STASH['set'])
+            )
+        )
+
+
+    @admin.register(TestModelAdvanced)
+    class TestModelAdvancedAdmin(FormFieldStashMixin, admin.ModelAdmin):
+        inlines = [TestInlineModelInline, ]
+        form = TestModelAdvancedForm
 
 
 Contribute
