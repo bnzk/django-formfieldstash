@@ -2,16 +2,29 @@ from django import forms
 from django.contrib import admin
 
 from formfieldstash.admin import FormFieldStashMixin
-from formfieldstash.helpers import get_advanced_stash_attrs
+from formfieldstash.helpers import get_advanced_stash_attrs, get_single_stash_attrs
 from .models import TestModelSingle, TestModelAdvanced, TestModelInInlineModel, TestInlineModelSingle, \
-    TestInlineModel, TestModelAdvanced2
+    TestInlineModel, TestModelAdvanced2, TestModelSingle2, SET_CHOICES, SELECTION_CHOICES
 
 
+@admin.register(TestModelSingle)
 class TestModelAdmin(FormFieldStashMixin, admin.ModelAdmin):
     single_formfield_stash = ('selection', )
 
 
-admin.site.register(TestModelSingle, TestModelAdmin)
+class TestModel2Form(forms.ModelForm):
+    selection = forms.ChoiceField(
+        required=False,
+        choices=SELECTION_CHOICES,
+        widget=forms.Select(
+            attrs=get_single_stash_attrs('selection')
+        )
+    )
+
+
+@admin.register(TestModelSingle2)
+class TestModel2Admin(FormFieldStashMixin, admin.ModelAdmin):
+    form = TestModel2Form
 
 
 class TestInlineModelInline(admin.StackedInline):
@@ -27,19 +40,10 @@ ADVANCED_STASH = {
 }
 
 
+@admin.register(TestModelAdvanced)
 class TestModelAdvancedAdmin(FormFieldStashMixin, admin.ModelAdmin):
     inlines = [TestInlineModelInline, ]
     formfield_stash = ADVANCED_STASH
-
-
-admin.site.register(TestModelAdvanced, TestModelAdvancedAdmin)
-
-
-SET_CHOICES = (
-    ('set1', 'with inline and field',),
-    ('set2', 'three fields',),
-    ('set3', 'two',),
-)
 
 
 class TestModelAdvanced2AdminForm(forms.ModelForm):
@@ -52,12 +56,10 @@ class TestModelAdvanced2AdminForm(forms.ModelForm):
     )
 
 
+@admin.register(TestModelAdvanced2)
 class TestModelAdvanced2AdminWithForm(FormFieldStashMixin, admin.ModelAdmin):
     inlines = [TestInlineModelInline, ]
     form = TestModelAdvanced2AdminForm
-
-
-admin.site.register(TestModelAdvanced2, TestModelAdvanced2AdminWithForm)
 
 
 class TestInlineModelSingleInline(FormFieldStashMixin, admin.StackedInline):
@@ -65,8 +67,6 @@ class TestInlineModelSingleInline(FormFieldStashMixin, admin.StackedInline):
     single_formfield_stash = ('selection', )
 
 
+@admin.register(TestModelInInlineModel)
 class TestModelInInlineModelAdmin(FormFieldStashMixin, admin.ModelAdmin):
     inlines = [TestInlineModelSingleInline, ]
-
-
-admin.site.register(TestModelInInlineModel, TestModelInInlineModelAdmin)
