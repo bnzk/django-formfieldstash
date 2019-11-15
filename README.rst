@@ -91,7 +91,7 @@ Have a look at ``formfieldstash/tests/test_app/admin.py`` for some examples.
     # admin.py
 
 
-    @admin.register(TestModelSingle, TestModelAdmin)
+    @admin.register(TestModelSingle)
     class TestModelAdmin(FormFieldStashMixin, admin.ModelAdmin):
         single_formfield_stash = ('selection', )
 
@@ -130,6 +130,7 @@ Have a look at ``formfieldstash/tests/test_app/admin.py`` for some examples.
             )
         )
 
+
     @admin.register(TestModelSingle)
     class TestModelAdmin(FormFieldStashMixin, admin.ModelAdmin):
         form = TestModelForm
@@ -158,7 +159,7 @@ Have a look at ``formfieldstash/tests/test_app/admin.py`` for some examples.
         )
 
 
-    @admin.register(TestModelAdvanced, TestModelAdvancedAdmin)
+    @admin.register(TestModelAdvanced)
     class TestModelAdvancedAdmin(FormFieldStashMixin, admin.ModelAdmin):
         inlines = [TestInlineModelInline, ]
         form = TestModelAdvancedForm
