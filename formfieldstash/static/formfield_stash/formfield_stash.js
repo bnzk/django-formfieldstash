@@ -50,7 +50,7 @@
                         // multi widget fields workaround, for now!
                         $wrap = $form.find(selector + "_0").closest(".form-row");
                     }
-                    if (has_configs) {
+                    if (has_configs && fieldconfigs[current_value]) {
                         var current_config = fieldconfigs[current_value];
                         if ($.inArray(item, current_config) > -1) {
                             $wrap.show(0);
