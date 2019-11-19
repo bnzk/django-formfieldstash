@@ -16,8 +16,9 @@ class FormFieldStashMixin(object):
         if getattr(self, 'formfield_stash', None):
             for stash_field, fields in self.formfield_stash.items():
                 if db_field.name == stash_field:
+                    the_choices = getattr(field, 'choices', [])
                     field.widget.attrs.update(
-                        get_advanced_stash_attrs(db_field.name, fields)
+                        get_advanced_stash_attrs(db_field.name, fields, the_choices)
                     )
         return field
 

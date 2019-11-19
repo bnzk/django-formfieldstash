@@ -1,7 +1,14 @@
 
+==== 0.0.6 (2019-11-19) ===
+
+- convenience: if specifying a normal (more advanced) stash, explicitly not defined values of the dropdown are now
+  falling back to the dropdowns value, ie behaving like when defining a single stash.
+
+
 ==== 0.0.5 (2019-11-15) ===
 
 - when using a modelform, the needed attrs can now be "calculated" with helper functions
+- django 1.11+ support from now on
 
 
 ==== 0.0.4 (2018-07-17) ===

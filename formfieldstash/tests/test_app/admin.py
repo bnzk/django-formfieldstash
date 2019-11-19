@@ -35,7 +35,7 @@ ADVANCED_STASH = {
     'set': {
         'set1': ('set1_1', '#testinlinemodel_set-group', ),
         'set2': ('set2_1', 'set2_2', 'set2_3', ),
-        'set3': ('set3_1', 'set2_1', ),
+        # 'set3': ('set3_1', 'set2_1', ),
     },
 }
 
