@@ -15,7 +15,7 @@ setup(
     name="django-formfieldstash",
     version=version,
     url='http://github.com/bnzk/django-formfieldstash',
-    license='BSD',
+    license='MIT',
     platforms=['OS Independent'],
     description="formfieldstash",
     long_description=read('PYPI.rst'),

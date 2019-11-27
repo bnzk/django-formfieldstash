@@ -36,8 +36,8 @@ class FormFieldStashMixin(object):
             'admin/js/jquery.init.js',
             'formfield_stash/formfield_stash.js',
         )
-        css = {
-            'all': ('formfield_stash/adjust-divers.css', ),
-        }
+        css = {}
+        #     'all': ('formfield_stash/adjust-divers.css', ),
+        # }
         original_media = super(FormFieldStashMixin, self).media
         return original_media + widgets.Media(css=css, js=js)
