@@ -1,4 +1,11 @@
 
+==== 0.0.7 (2019-11-27) ===
+
+- more robust field selection for show/hide: using a fallback on the label.
+  m2m with filter_horizontal now work, for example.
+- removing an old css hack for inlines
+
+
 ==== 0.0.6 (2019-11-19) ===
 
 - convenience: if specifying a normal (more advanced) stash, explicitly not defined values of the dropdown are now

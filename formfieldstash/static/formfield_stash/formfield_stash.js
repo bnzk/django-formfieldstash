@@ -39,12 +39,18 @@
                     if (!item.length) {
                         return;
                     }
+                    // basic try: field with id
                     var selector = "#id_" + prefix + item;
-                    var $field = $form.find(selector);
-                    var $wrap = $field.closest(".form-row");
+                    var $wrap = $form.find(selector).closest(".form-row");
                     if (item.indexOf("#") > -1) {
+                        // handmade targeting via ID, mainly used for inlines
                         selector = item;
                         $wrap = $(selector);
+                    }
+                    if (!$wrap.length) {
+                        // special items, like m2m with filter_horizontal, try the label!
+                        selector = 'label[for="id_' + prefix + item + '"]';
+                        $wrap = $form.find(selector).closest(".form-row");
                     }
                     if (!$wrap.length) {
                         // multi widget fields workaround, for now!
