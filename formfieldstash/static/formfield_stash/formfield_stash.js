@@ -40,21 +40,20 @@
                         return;
                     }
                     // basic try: field with id
-                    var selector = "#id_" + prefix + item;
+                    var id_selector = "#id_" + prefix + item;
                     var $wrap = $form.find(selector).closest(".form-row");
                     if (item.indexOf("#") > -1) {
                         // handmade targeting via ID, mainly used for inlines
-                        selector = item;
-                        $wrap = $(selector);
+                        $wrap = $(item);
                     }
                     if (!$wrap.length) {
                         // special items, like m2m with filter_horizontal, try the label!
-                        selector = 'label[for="id_' + prefix + item + '"]';
+                        var selector = 'label[for="id_' + prefix + item + '"]';
                         $wrap = $form.find(selector).closest(".form-row");
                     }
                     if (!$wrap.length) {
                         // multi widget fields workaround, for now!
-                        $wrap = $form.find(selector + "_0").closest(".form-row");
+                        $wrap = $form.find(id_selector + "_0").closest(".form-row");
                     }
                     if (has_configs && fieldconfigs[current_value]) {
                         var current_config = fieldconfigs[current_value];
