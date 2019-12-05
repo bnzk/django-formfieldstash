@@ -1,4 +1,9 @@
 
+==== 0.0.8 (2019-12-05) ===
+
+- correct regressions for multi widgets
+
+
 ==== 0.0.7 (2019-11-27) ===
 
 - more robust field selection for show/hide: using a fallback on the label.
