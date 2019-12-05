@@ -24,7 +24,7 @@ SET_CHOICES = (
 class TestModelSingle(models.Model):
     selection = models.CharField('Selection', max_length=20, blank=True, choices=SELECTION_CHOICES)
     horse = models.CharField(max_length=20, blank=True, )
-    bear = models.DateTimeField(blank=True, )
+    bear = models.DateTimeField(blank=True, null=True, default=None)
     octopus = models.CharField(max_length=20, blank=True, )
 
     def __str__(self):
