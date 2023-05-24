@@ -20,13 +20,10 @@ Installation
 
 To get the latest stable release from PyPi
 
-.. code-block:: bash
 
     pip install django-formfieldstash
 
 Add ``formfieldstash`` to your ``INSTALLED_APPS``
-
-.. code-block:: python
 
     INSTALLED_APPS = (
         ...,
@@ -40,8 +37,6 @@ Usage
 ------------
 
 Have a look at ``formfieldstash/tests/test_app/admin.py`` for some examples.
-
-.. code-block:: python
 
     # models.py
 
@@ -90,9 +85,7 @@ Have a look at ``formfieldstash/tests/test_app/admin.py`` for some examples.
             return "A Simple Inline Model: %s" % self.title
 
 
-
     # admin.py
-
 
     @admin.register(TestModelSingle)
     class TestModelAdmin(FormFieldStashMixin, admin.ModelAdmin):
