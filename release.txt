@@ -6,9 +6,7 @@ git flow release start 0.0.x
 git flow release finish 0.0.x
 git push --all; git push --tags
 git push upstream --all; git push upstream --tags
-python setup.py sdist
-python setup.py bdist_wheel --universal
-twine upload dist/* -r pypitest
-twine upload dist/*
+
+# release is done with Github Actions!
 
 version bump to 0.0.xDEV
