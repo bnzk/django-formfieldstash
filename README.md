@@ -12,7 +12,7 @@ this is a pure javascript solution, using a modeladminmixin approach.
 
 Example, using the included test app (see code for how it's done):
 
-![Demo GIF](https://raw.githubusercontent.com/bnzk/django-formfieldstash/main/docs/formfieldstash.gif "Demo GIF")
+![CI](https://raw.githubusercontent.com/bnzk/django-formfieldstash/main/docs/formfieldstash.gif "Demo GIF")
  
 
 Installation
