@@ -1,6 +1,3 @@
-from __future__ import unicode_literals
-
-from django.utils.encoding import python_2_unicode_compatible
 from django.db import models
 
 
@@ -19,8 +16,6 @@ SET_CHOICES = (
     ('set3_1', '3'),
 )
 
-
-@python_2_unicode_compatible
 class TestModelSingle(models.Model):
     selection = models.CharField('Selection', max_length=20, blank=True, choices=SELECTION_CHOICES)
     horse = models.CharField(max_length=20, blank=True, )
@@ -31,7 +26,6 @@ class TestModelSingle(models.Model):
         return "Single Stash Test Model: %s" % self.selection
 
 
-@python_2_unicode_compatible
 class TestModelSingle2(models.Model):
     selection = models.CharField('Selection', max_length=20, blank=True, choices=SELECTION_CHOICES)
     horse = models.CharField(max_length=20, blank=True, )
@@ -42,7 +36,6 @@ class TestModelSingle2(models.Model):
         return "Single Stash Test Model 2: %s" % self.selection
 
 
-@python_2_unicode_compatible
 class TestModelAdvanced(models.Model):
     set = models.CharField('Selection', max_length=20, blank=True, choices=SET_CHOICES)
     set1_1 = models.CharField(max_length=20, blank=True, )
@@ -55,7 +48,6 @@ class TestModelAdvanced(models.Model):
         return "Test Advanced Model: %s" % self.set
 
 
-@python_2_unicode_compatible
 class TestModelAdvanced2(models.Model):
     set = models.CharField('Selection', max_length=20, blank=True, choices=SET_CHOICES)
     set1_1 = models.CharField(max_length=20, blank=True, )
@@ -68,7 +60,6 @@ class TestModelAdvanced2(models.Model):
         return "Test Advanced Model 2: %s" % self.set
 
 
-@python_2_unicode_compatible
 class TestInlineModel(models.Model):
     parent = models.ForeignKey(TestModelAdvanced, on_delete=models.CASCADE)
     parent2 = models.ForeignKey(TestModelAdvanced2, on_delete=models.CASCADE, default=None, null=True)
@@ -78,7 +69,6 @@ class TestInlineModel(models.Model):
         return "A Simple Inline Model: %s" % self.title
 
 
-@python_2_unicode_compatible
 class TestModelInInlineModel(models.Model):
     title = models.CharField(max_length=20, blank=True, )
 
@@ -86,7 +76,6 @@ class TestModelInInlineModel(models.Model):
         return "Has Stash In Inline Model: %s" % self.title
 
 
-@python_2_unicode_compatible
 class TestInlineModelSingle(models.Model):
     parent = models.ForeignKey(TestModelInInlineModel, on_delete=models.CASCADE)
     selection = models.CharField('Selection', max_length=20, blank=True, choices=SELECTION_CHOICES)
