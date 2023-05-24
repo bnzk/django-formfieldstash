@@ -10,7 +10,10 @@ django-formfieldstash
 show/hide modelform fields, depending on current value of a dropdown in the form. without page reload.
 this is a pure javascript solution, using a modeladminmixin approach.
 
+Example, using the included test app (see code for how it's done):
+
 ![CI](https://raw.githubusercontent.com/benzkji/django-formfieldstash/main/docs/formfieldstash.gif "CI")
+ 
 
 Installation
 ------------
