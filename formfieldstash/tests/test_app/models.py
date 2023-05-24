@@ -8,13 +8,13 @@ SELECTION_CHOICES = (
     ('octopus', 'Octopus'),
 )
 
-
 SET_CHOICES = (
     ('', 'Empty'),
     ('set1', '1'),
     ('set2', '2'),
     ('set3_1', '3'),
 )
+
 
 class TestModelSingle(models.Model):
     selection = models.CharField('Selection', max_length=20, blank=True, choices=SELECTION_CHOICES)
