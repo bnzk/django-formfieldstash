@@ -1,4 +1,10 @@
 
+==== 0.1.0 (2023-05-24) ===
+
+- use formset:added for inline add detection (instead of unstable dom dependant click events)
+- github actions, among other things, to catch up with things (last release 2019, uuhhh)
+
+
 ==== 0.0.8 (2019-12-05) ===
 
 - correct regressions for multi widgets

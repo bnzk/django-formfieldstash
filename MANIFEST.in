@@ -1,6 +1,6 @@
 include LICENSES
-include README.rst
-include PYPI.rst
+include README.md
+include PYPI.md
 global-exclude *.orig *.pyc *.log *.swp
 
 recursive-include formfieldstash/templates *

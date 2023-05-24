@@ -87,18 +87,22 @@
 // init, including add row for inlines
 django.jQuery(document).ready( function($) {
 
-    $('.inline-group').each(function(index, inline) {
-        if ($(inline).find("fieldset select[data-formfield-stash=true]").length) {
-            $(inline).find(".add-row").click(add_row_handler);
-        };
-    });
+    // https://docs.djangoproject.com/en/4.2/ref/contrib/admin/javascript/
+    $(document).on('formset:added', (event, $row, formsetName) => {
+        if (event.detail && event.detail.formsetName) {
+            // Django >= 4.1
+            handleFormsetAdded(event.target, event.detail.formsetName)
+        } else {
+            // Django < 4.1, use $row and formsetName
+            handleFormsetAdded($row.get(0), formsetName)
+        }
+    })
 
-    function add_row_handler(event) {
-        // depends on html structure, bad. but...
-        var $inline = $(event.currentTarget).parent();
-        var $to_enhance = $inline.find(".last-related:not(.empty-form ) select[data-formfield-stash=true]");
+    function handleFormsetAdded(row, formsetName) {
+        var $to_enhance = $(row).find('select[data-formfield-stash="true"]')
         $to_enhance.formfield_stash();
     }
 
     $('form select[data-formfield-stash=true]').not("[name*=__prefix__]").formfield_stash();
+
 });
